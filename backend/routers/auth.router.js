@@ -1,7 +1,7 @@
 const express = require("express");
 const User = require("../models/user");
 const router = express.Router();
-const {v4:uuidv4} = require("uuid");
+const { v4: uuidv4 } = require("uuid");
 const jwt = require("jsonwebtoken");
 const secretKey = "JWTSecretKey123Key";
 const options = {
@@ -13,15 +13,22 @@ router.post("/register", async (req, res) => {
         const user = new User(req.body);
         user._id = uuidv4();
         user.createdDate = new Date();
-        user.isAdmin=false;
-        await user.save();
-        const token = jwt.sign({}, secretKey, options);
-        let model = { token: token, user: user };
-        res.json(model);
+        user.isAdmin = false;
 
+        const checkUserEmail = await User.findOne({email: user.email});
+
+        if (checkUserEmail != null) {
+            res.status(403).json({ message: "This mail is already in used by another user." })
+        } else {
+
+            await user.save();
+            const token = jwt.sign({}, secretKey, options);
+            let model = { token: token, user: user };
+            res.json(model);
+        }
     } catch (error) {
-        res.status(500).json({message:error.message});
+        res.status(500).json({ message: error.message });
     }
 })
 
-module.exports=router;
+module.exports = router;
