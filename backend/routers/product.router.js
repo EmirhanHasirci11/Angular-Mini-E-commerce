@@ -26,3 +26,16 @@ router.post("/add",upload.array("images"),async(req,res)=>{
         res.json({message:"Product creation is succeed!"})
     })                
 })
+router.post("/removeById", async (req, res)=> {
+    response(res, async()=> {
+        const {_id}= req.body;
+
+        const product = await Product.findById(_id);
+        for(const image of product.imageUrls){
+            fs.unlink(image.path, ()=> {});
+        }
+
+        await Product.findByIdAndRemove(_id);
+        res.json({message: "Product is deleted"});
+    });
+});
