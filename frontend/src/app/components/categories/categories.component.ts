@@ -56,9 +56,12 @@ export class CategoriesComponent implements OnInit {
       });
     }
   }
-  removeById(){
-    this._swal.callSwal("Do you want to remove that category?","Category deletion","Delete",()=>{
-      
+  removeById(model:CategoryModel){
+    this._swal.callSwal(`${model.name} Do you want to remove this category?`,"Category deletion","Delete",()=>{
+      this._category.removeById(model._id,res=>{
+        this._toastr.info(res.message);
+        this.getAll()
+      })
     })
   }
 }
