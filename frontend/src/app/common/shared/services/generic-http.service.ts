@@ -20,14 +20,14 @@ export class GenericHttpService {
     this._http.get<T>(`${this.api}/${api}`).subscribe({
       next: (res:T)=> {
         callBack(res);        
+        this._spinner.hide();
       },
       error: (err:HttpErrorResponse) => {
         console.log(err);
         this._toastr.error(err.error.message);       
-      }
-      ,complete:()=>{
         this._spinner.hide();
       }
+      
     });
   }
 
@@ -35,12 +35,12 @@ export class GenericHttpService {
     this._spinner.show();
     this._http.post<T>(`${this.api}/${api}`, model, {}).subscribe({
       next: (res:T)=> {
-        callBack(res);        
+        callBack(res);       
+        this._spinner.hide(); 
       },
       error: (err:HttpErrorResponse) => {
         console.log(err);
         this._toastr.error(err.error.message);           
-      }  ,complete:()=>{
         this._spinner.hide();
       }
     });
