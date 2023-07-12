@@ -3,8 +3,9 @@ const router = express.Router();
 const Product = require("../models/product");
 const { v4: uuidv4 } = require("uuid");
 const fs = require("fs");
+const upload=require("../services/file.service")
 
-router.post("/add",async(req,res)=>{
+router.post("/add",upload.array("images"),async(req,res)=>{
     try {
         const {name,stock,price,categories}=req.body;
 
@@ -16,6 +17,7 @@ router.post("/add",async(req,res)=>{
             price:price,
             categories:categories,
             isActive:true,
+            imageUrls:req.files,
             createdDate:new Date()
         })
         await product.save();
