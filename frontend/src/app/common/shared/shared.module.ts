@@ -4,6 +4,7 @@ import { RouterModule } from '@angular/router';
 import { BrowserModule } from '@angular/platform-browser';
 import { ValidDirective } from './directives/valid.directive';
 import { FormsModule } from '@angular/forms';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 
 
@@ -12,11 +13,13 @@ import { FormsModule } from '@angular/forms';
   imports: [
     CommonModule,
     RouterModule,
+    NgxSpinnerModule,
     ValidDirective,
     FormsModule
   ],
   exports:[
     CommonModule,
+    NgxSpinnerModule,
     RouterModule,
     ValidDirective,
     FormsModule

@@ -7,6 +7,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations"
 import { AppComponent } from "./app/app.component";
 import { routes } from "./app/router";
 import { ToastrModule } from "ngx-toastr";
+import { NgxSpinnerModule } from "ngx-spinner";
 
 bootstrapApplication(AppComponent, {
   providers: [
@@ -15,6 +16,7 @@ bootstrapApplication(AppComponent, {
       BrowserModule,
       CommonModule,
       BrowserAnimationsModule,
+      NgxSpinnerModule,
       RouterModule.forRoot(routes),
       ToastrModule.forRoot({
         closeButton:true,
