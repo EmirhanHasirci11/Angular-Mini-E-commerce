@@ -5,6 +5,7 @@ import { SharedModule } from 'src/app/common/shared/shared.module';
 import { NgForm } from '@angular/forms';
 import { CategoryService } from './services/category.service';
 import { ToastrService } from 'ngx-toastr';
+import { SwalService } from 'src/app/common/shared/services/swal.service';
 
 @Component({
   selector: 'app-categories',
@@ -18,7 +19,8 @@ export class CategoriesComponent implements OnInit {
   updateCategory:CategoryModel=new CategoryModel();
   constructor(
     private _toastr: ToastrService,
-    private _category: CategoryService
+    private _category: CategoryService,
+    private _swal:SwalService
   ) { }
 
   ngOnInit(): void {
@@ -53,5 +55,10 @@ export class CategoriesComponent implements OnInit {
         this.getAll();
       });
     }
+  }
+  removeById(){
+    this._swal.callSwal("Do you want to remove that category?","Category deletion","Delete",()=>{
+      
+    })
   }
 }
