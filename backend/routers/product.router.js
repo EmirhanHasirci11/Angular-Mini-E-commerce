@@ -122,3 +122,5 @@ router.post("/removeImageBuProductIdAndIndex", async(req, res)=>{
         }
     });
 });
+
+module.exports=router;
