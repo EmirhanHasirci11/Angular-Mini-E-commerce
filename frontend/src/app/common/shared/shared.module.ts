@@ -5,6 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { ValidDirective } from './directives/valid.directive';
 import { FormsModule } from '@angular/forms';
 import { NgxSpinnerModule } from 'ngx-spinner';
+import { BlankComponent } from '../components/blank/blank.component';
 
 
 
@@ -15,6 +16,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     RouterModule,
     NgxSpinnerModule,
     ValidDirective,
+    BlankComponent,
     FormsModule
   ],
   exports:[
@@ -22,6 +24,7 @@ import { NgxSpinnerModule } from 'ngx-spinner';
     NgxSpinnerModule,
     RouterModule,
     ValidDirective,
+    BlankComponent,
     FormsModule
   ]
 })

@@ -14,6 +14,10 @@ export const routes: Routes = [
         loadComponent: () => import("./components/layouts/layouts.component").then(c => c.LayoutsComponent),
         children: [
             {
+                path: "",
+                loadComponent: () => import("./components/home/home.component").then(c => c.HomeComponent)
+            },
+            {
                 path: "home",
                 loadComponent: () => import("./components/home/home.component").then(c => c.HomeComponent)
             },
