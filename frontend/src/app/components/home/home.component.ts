@@ -5,6 +5,9 @@ import { CategoryModel } from '../categories/models/category.module';
 import { CategoryService } from '../categories/services/category.service';
 import { ProductModel } from '../products/models/product.model';
 import { ProductService } from '../products/services/product.service';
+import { ToastrService } from 'ngx-toastr';
+import { BasketService } from '../baskets/services/basket.service';
+import { BasketModel } from '../baskets/models/basket.model';
 
 @Component({
   selector: 'app-home',
@@ -14,13 +17,15 @@ import { ProductService } from '../products/services/product.service';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit {
-  categories: CategoryModel[] = [];  
+  categories: CategoryModel[] = [];
   request: RequestModel = new RequestModel();
   products: ProductModel[] = [];
 
-  constructor(    
+  constructor(
     private _category: CategoryService,
-    private _product: ProductService
+    private _product: ProductService,
+    private _basket: BasketService,
+    private _toastr: ToastrService
   ) { }
 
   ngOnInit(): void {
@@ -29,7 +34,6 @@ export class HomeComponent implements OnInit {
   }
 
   getAll(){
-
     this._product.getAllForHomePage(this.request, res=> this.products = res);
   }
 
@@ -37,10 +41,20 @@ export class HomeComponent implements OnInit {
     this._category.getAll(res => this.categories = res);
   }
 
-  
   changeCategory(categoryId: string, categoryName: string){
     this.request.categoryName = categoryName;
     this.request.categoryId = categoryId;
     this.getAll();
+  }
+
+  addBasket(productId: string, price: number){
+    let model = new BasketModel();
+    model.productId = productId;
+    model.price = price;
+    model.quantity = 1;
+    this._basket.add(model, res=> {
+      this._toastr.success(res.message);
+      this.getAll();
+    });
   }
 }

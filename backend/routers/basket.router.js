@@ -22,7 +22,7 @@ router.post("/add", async (req, res)=>{
         product.stock -= quantity;
         await Product.findByIdAndUpdate(productId, product);
 
-        res.json({message: "Prodcut added to basket successfully"});
+        res.json({message: "Product added to basket successfully"});
     });
 });
 
@@ -59,6 +59,14 @@ router.post("/", async(req, res)=> {
         ]);
 
         res.json(baskets);
+    });
+});
+
+router.post("/getCount",async(req, res)=> {
+    response(res, async()=> {
+        const {userId} = req.body;
+        const count = await Basket.find({userId: userId}).count();
+        res.json({count: count});
     });
 });
 
