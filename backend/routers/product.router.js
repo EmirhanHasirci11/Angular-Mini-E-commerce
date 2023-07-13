@@ -84,7 +84,7 @@ router.post("/getById", async(req, res)=> {
         res.json(product);
     });
 });
-router.post("/update", upload.array(images), async(req, res)=> {
+router.post("/update", upload.array("images"), async(req, res)=> {
     response(res, async()=>{
         const {_id, name, stock, price, categories} = req.body;
 
