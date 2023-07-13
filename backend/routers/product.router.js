@@ -11,7 +11,7 @@ router.post("/add",upload.array("images"),async(req,res)=>{
     response(res, async()=>{
         const {name,stock,price,categories}=req.body;
 
-        const productId=new uuidv4();
+        const productId= uuidv4();
         let product=new Product({
             _id:productId,
             name:name.toUpperCase(),
