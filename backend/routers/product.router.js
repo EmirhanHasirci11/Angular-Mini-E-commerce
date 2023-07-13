@@ -89,9 +89,9 @@ router.post("/update", upload.array("images"), async(req, res)=> {
         const {_id, name, stock, price, categories} = req.body;
 
         let product = await Product.findById(_id);
-        for(const image of product.imageUrls){
-            fs.unlink(image.path, ()=> {});
-        }
+        // for(const image of product.imageUrls){
+        //     fs.unlink(image.path, ()=> {});
+        // }
 
         let imageUrls;
         imageUrls = [...product.imageUrls,...req.files]
@@ -101,6 +101,7 @@ router.post("/update", upload.array("images"), async(req, res)=> {
             price: price,
             imageUrls: imageUrls,
             categories: categories
+            
         };
         await Product.findByIdAndUpdate(_id, product);
         res.json({message: "product is updated!"});
