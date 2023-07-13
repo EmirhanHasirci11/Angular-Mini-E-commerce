@@ -1,1 +1,61 @@
-<app-blank title="Home" sectionTitle="Home Page"></app-blank>
+<app-blank title="Home" sectionTitle="Products">
+    <div class="row">
+        <div class="col-md-3 borderCustom">
+            <ul>
+                <li (click)="changeCategory('','All')" [ngClass]="request.categoryName == 'All' ? 'active' : ''">
+                    All
+                </li>
+                <li 
+                (click)="changeCategory(category._id,category.name)" 
+                [ngClass]="request.categoryName == category.name ? 'active' : ''" 
+                *ngFor="let category of categories">
+                    {{category.name}}
+                </li>
+            </ul>
+        </div>
+        <div class="col-md-9">
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-7">
+                        <label>Search</label>
+                        <input [(ngModel)]="request.search" type="search" class="form-control" placeholder="Search...">
+                    </div>
+                    <div class="col-md-3">
+                        <label>Order by price</label>
+                        <select [(ngModel)]="request.priceFilter" class="form-control">
+                            <option value="0">Select</option>
+                            <option value="1">Incresing Price</option>
+                            <option value="-1">Decreasing Price</option>
+                        </select>
+                    </div>
+                    <div class="col-md-2">
+                        <label>Tools</label><br>
+                        <button (click)="getAll()" class="btn btn-primary">
+                            Get
+                        </button>
+                    </div>
+                </div>
+    
+            </div>
+    
+            <div class="row mt-2">
+                <div class="col-md-4" *ngFor="let product of products let i=index">
+                    <div class="card text-center">
+                        <div class="card-header">
+                            <h3>{{product.name}}</h3>
+                        </div>
+                        <div class="card-body">
+                            <img [src]="'http://localhost:5000/' + product.imageUrls[0].path" width="200" />
+                            <p><strong>Remaining count: {{product.stock}}</strong></p>
+                            <hr>
+                            <h4 class="alert alert-danger">Price : {{product.price}}</h4>
+                            <button *ngIf="product.stock > 0" class="btn btn-outline-success w-100">
+                                Add to basket
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </app-blank>

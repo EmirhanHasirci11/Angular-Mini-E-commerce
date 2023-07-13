@@ -1,5 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { RequestModel } from 'src/app/common/models/request.model';
 import { SharedModule } from 'src/app/common/shared/shared.module';
+import { CategoryModel } from '../categories/models/category.module';
+import { CategoryService } from '../categories/services/category.service';
+import { ProductModel } from '../products/models/product.model';
+import { ProductService } from '../products/services/product.service';
 
 @Component({
   selector: 'app-home',
@@ -8,6 +13,34 @@ import { SharedModule } from 'src/app/common/shared/shared.module';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.css']
 })
-export class HomeComponent {
+export class HomeComponent implements OnInit {
+  categories: CategoryModel[] = [];  
+  request: RequestModel = new RequestModel();
+  products: ProductModel[] = [];
 
+  constructor(    
+    private _category: CategoryService,
+    private _product: ProductService
+  ) { }
+
+  ngOnInit(): void {
+    this.getCategories();
+    this.getAll();
+  }
+
+  getAll(){
+
+    this._product.getAllForHomePage(this.request, res=> this.products = res);
+  }
+
+  getCategories() {
+    this._category.getAll(res => this.categories = res);
+  }
+
+  
+  changeCategory(categoryId: string, categoryName: string){
+    this.request.categoryName = categoryName;
+    this.request.categoryId = categoryId;
+    this.getAll();
+  }
 }
