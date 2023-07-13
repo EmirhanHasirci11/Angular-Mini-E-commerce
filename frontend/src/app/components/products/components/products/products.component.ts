@@ -50,4 +50,13 @@ export class ProductsComponent implements OnInit {
       this.getAll(1);
     }
   }
+  removeById(id: string){
+    this._swal.callSwal("Do you want to remove this item?","Remove","Remove",()=>{
+      let model = {_id: id};
+      this._product.removeById(model,res=>{
+        this._toastr.info(res.message);
+        this.getAll(this.request.pageNumber);
+      })
+    })
+  }
 }
